@@ -4,9 +4,14 @@ URL="https://bbs.ruliweb.com/community/board/300022/rss"
 
 XML=$(curl -s "$URL")
 
-TOP1=$(echo "$XML" | grep -oP '(?<=<title><!\[CDATA\[).*?(?=\]\]></title>)' | sed -n '2p')
-TOP2=$(echo "$XML" | grep -oP '(?<=<title><!\[CDATA\[).*?(?=\]\]></title>)' | sed -n '3p')
-TOP3=$(echo "$XML" | grep -oP '(?<=<title><!\[CDATA\[).*?(?=\]\]></title>)' | sed -n '4p')
+TITLES=$(echo "$XML" \
+  | tr '\n' ' ' \
+  | grep -oP '(?<=<item>).*?(?=</item>)' \
+  | grep -oP '(?<=<title>).*?(?=</title>)')
+
+TOP1=$(echo "$TITLES" | sed -n '1p')
+TOP2=$(echo "$TITLES" | sed -n '2p')
+TOP3=$(echo "$TITLES" | sed -n '3p')
 
 NOW=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
 
