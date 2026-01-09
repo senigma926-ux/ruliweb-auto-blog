@@ -1,10 +1,13 @@
 #!/bin/bash
 
-URL="https://bbs.ruliweb.com/community/board/300022"
+URL="https://m.ruliweb.com/community/board/300022"
 
-HTML=$(curl -s "$URL")
+HTML=$(curl -s -A "Mozilla/5.0" "$URL")
 
-TOP3=$(echo "$HTML" | grep -oP '(?<=class="subject">).*?(?=</a>)' | head -n 3)
+TOP3=$(echo "$HTML" \
+  | grep -oP '(?<=<a href="/community/board/).*?(?=</a>)' \
+  | sed 's/<[^>]*>//g' \
+  | head -n 3)
 
 NOW=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
 
