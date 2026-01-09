@@ -1,0 +1,26 @@
+name: Ruliweb Top3 Collector
+
+on:
+  schedule:
+    - cron: "0 * * * *"   # 매 1시간
+  workflow_dispatch:
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run collector
+        run: |
+          chmod +x script.sh
+          ./script.sh
+
+      - name: Commit result
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add data/ruliweb_top3.json
+          git commit -m "Update Ruliweb Top3" || echo "No changes"
+          git push
