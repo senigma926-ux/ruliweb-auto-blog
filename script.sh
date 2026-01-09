@@ -1,6 +1,6 @@
 #!/bin/bash
 
-URL="https://bbs.ruliweb.com/community/board/300022/rss"
+URL="https://bbs.ruliweb.com/community/board/300143/rss"
 
 XML=$(curl -s "$URL")
 
