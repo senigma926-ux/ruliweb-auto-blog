@@ -1,16 +1,12 @@
 #!/bin/bash
 
-URL="https://m.ruliweb.com/community/board/300022"
+URL="https://bbs.ruliweb.com/community/board/300022/rss"
 
-HTML=$(curl -s -A "Mozilla/5.0" "$URL")
+XML=$(curl -s "$URL")
 
-TOP_TITLES=$(echo "$HTML" \
-  | grep -oP '<a[^>]+href="/community/board/300022/read/[^"]+"[^>]+title="\K[^"]+' \
-  | head -n 3)
-
-TOP1=$(echo "$TOP_TITLES" | sed -n '1p')
-TOP2=$(echo "$TOP_TITLES" | sed -n '2p')
-TOP3=$(echo "$TOP_TITLES" | sed -n '3p')
+TOP1=$(echo "$XML" | grep -oP '(?<=<title><!\[CDATA\[).*?(?=\]\]></title>)' | sed -n '2p')
+TOP2=$(echo "$XML" | grep -oP '(?<=<title><!\[CDATA\[).*?(?=\]\]></title>)' | sed -n '3p')
+TOP3=$(echo "$XML" | grep -oP '(?<=<title><!\[CDATA\[).*?(?=\]\]></title>)' | sed -n '4p')
 
 NOW=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
 
