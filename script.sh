@@ -1,6 +1,6 @@
 #!/bin/bash
 
-URL="https://bbs.ruliweb.com/community/board/300143"
+URL="https://bbs.ruliweb.com/community/board/300022"
 
 HTML=$(curl -s "$URL")
 
